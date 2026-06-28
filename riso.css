@@ -1,0 +1,153 @@
+/* ============================================================
+   RISOGRAPH / SCREENPRINT THEME OVERLAY
+   2-color riso: cobalt ink + vermilion accent on warm cream.
+   Loaded AFTER colors_and_type.css and the page's inline <style>.
+   Palette tokens are remapped in each page's :root:
+     --blue #1B45D0 (cobalt ink, dominant)  --navy #0A2A66 (text ink)
+     --gold #F4541E (vermilion accent)        --red  #E03A1C
+     --cream #F1EAD9 (paper)                  --lgray #E4E1DA (warm grey)
+   ============================================================ */
+
+/* ---- Old grain overlay disabled (replaced by print-texture.js) ---- */
+html::after { content: none !important; display: none !important; }
+.grain-wrap, .grain-canvas, .paper-layer { display: none !important; }
+/* When the WebGL offset-print overlay is active, suppress this CSS fallback */
+html.webgl-grain::after { display: none; }
+/* Canvas grain active: suppress the CSS fallback grain */
+html.canvas-grain::after { display: none; }
+
+/* ---- Canvas film-grain + chromatic-aberration plates (VISIBLE first pass) ---- */
+.grain-wrap {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999;
+  pointer-events: none; will-change: transform;
+}
+.grain-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  mix-blend-mode: multiply; opacity: 0.15;          /* TUNE DOWN to 0.04–0.08 */
+  filter: url(#grainDisplace);
+}
+:root { --cax: 2px; }                                /* TUNE DOWN to 0.5–1px */
+
+/* Paper fiber layer */
+.paper-layer {
+  position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+  mix-blend-mode: multiply; opacity: 0.10;
+  filter: url(#paperFiber);
+  background: #fff;
+}
+
+/* Chromatic aberration on imagery (cloned channel plates, screen-blended) */
+.ca-host { overflow: hidden; }
+.ca-host > .ca-layer {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; pointer-events: none; mix-blend-mode: screen;
+  opacity: 0.55; will-change: transform;
+}
+.ca-host > .ca-r { filter: url(#caR); transform: translate3d(var(--cax), 0, 0); }
+.ca-host > .ca-b { filter: url(#caB); transform: translate3d(calc(-1 * var(--cax)), 0, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ca-host > .ca-layer { transform: none; }
+}
+@keyframes grainShift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-6%, -3%); }
+  20%  { transform: translate(4%, 5%); }
+  30%  { transform: translate(-3%, 6%); }
+  40%  { transform: translate(7%, -4%); }
+  50%  { transform: translate(-7%, 2%); }
+  60%  { transform: translate(3%, -6%); }
+  70%  { transform: translate(-4%, 4%); }
+  80%  { transform: translate(6%, 3%); }
+  90%  { transform: translate(-2%, -5%); }
+  100% { transform: translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html::after { animation: none; }
+}
+
+/* ---- Ink colors: navy for text, cobalt stays structural ---- */
+.hero-title, .sec-title, .panel-title, .menu-block .mb-label,
+.about-stat .n, .work-name,
+.dp-title, .dp-h {
+  color: var(--navy) !important;
+}
+.sec-sub, .about-body p, .dp-p, .dp-sub, .panel-intro,
+.exp-role, .exp-co, .closing-sub {
+  color: var(--navy) !important;
+}
+/* keep light text where sections are solid cobalt */
+.sec-bg-blue .sec-title, .sec-bg-blue .sec-sub,
+.sec-bg-blue .exp-role, .sec-bg-blue .exp-co,
+.sec-bg-blue .exp-role span { color: var(--cream) !important; }
+
+/* ---- Halftone dot tone as a design element (cobalt on cream) ---- */
+.halftone { color: var(--blue) !important; }
+
+/* hero corner halftone burst */
+.hero::after, .dp-hero::after {
+  content: "";
+  position: absolute;
+  right: -60px; top: 8%;
+  width: clamp(220px, 34vw, 420px);
+  height: clamp(220px, 34vw, 420px);
+  background-image: radial-gradient(var(--blue) 28%, transparent 30%);
+  background-size: 18px 18px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(circle, #000 58%, transparent 72%);
+  mask-image: radial-gradient(circle, #000 58%, transparent 72%);
+}
+
+/* closing section: cobalt halftone dots over vermilion ground */
+.closing { position: relative; }
+.closing::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(var(--navy) 26%, transparent 28%);
+  background-size: 17px 17px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+/* big display type filled with a halftone dot tone */
+.closing-msg {
+  background-image: radial-gradient(var(--navy) 33%, transparent 35%);
+  background-size: 9px 9px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---- Work thumbnails: optional duotone halftone on HOVER only ----
+   Default = untouched full-color artwork. Hover = cobalt wash + dot tone. */
+.work-thumb { position: relative; }
+.work-thumb::after,
+.work-thumb::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 360ms var(--ease, ease);
+}
+.work-thumb::after {                /* flat cobalt wash */
+  background: var(--blue);
+  mix-blend-mode: multiply;
+  z-index: 2;
+}
+.work-thumb::before {               /* halftone dot tone on top */
+  background-image: radial-gradient(var(--navy) 32%, transparent 34%);
+  background-size: 7px 7px;
+  mix-blend-mode: multiply;
+  z-index: 3;
+}
+.work-card:hover .work-thumb::after  { opacity: 0.5; }
+.work-card:hover .work-thumb::before { opacity: 0.45; }
+
+/* keep card hover lift but ensure thumb clips the overlay */
+.work-thumb { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .work-thumb::after, .work-thumb::before { transition: none; }
+}

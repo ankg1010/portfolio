@@ -1,0 +1,291 @@
+/* ============================================================
+   Aylie Design System — Colors & Typography
+   Freelance graphic designer portfolio
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Jost:wght@400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'LiberUnused';
+  src: local('Arial');
+}
+
+/* Lima @font-face lives in lima-font.css (base64-inlined) — linked before this file */
+
+/* Futura — single family, weight-mapped: medium for body, bold for labels, heavy for display */
+@font-face {
+  font-family: 'Futura';
+  src: url('assets/futura-medium.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura';
+  src: url('assets/futura-bold.ttf') format('truetype');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura';
+  src: url('assets/futura-heavy.otf') format('opentype');
+  font-weight: 800 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* alias kept for any lingering references */
+@font-face {
+  font-family: 'Futura Text';
+  src: url('assets/futura-medium.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Futura Text';
+  src: url('assets/futura-bold.ttf') format('truetype');
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* --------------------------------------------------------
+     CORE PALETTE
+     -------------------------------------------------------- */
+  --royal-blue: #003CA6;      /* Trust, professionalism, headers */
+  --royal-blue-hover: #2E6AD6; /* Brighter on hover */
+  --royal-blue-pressed: #6A97E8; /* Lighter / pastel on press */
+  --royal-blue-soft: #e6ecf6;  /* Tinted background */
+
+  --golden: #E2AB20;          /* Warmth, creativity, action, highlights */
+  --golden-hover: #F2C24A;    /* Brighter on hover */
+  --golden-pressed: #FADB84;  /* Pastel on press */
+  --golden-soft: #fbf1d8;     /* Tinted background */
+
+  --cream: #F8EFE0;           /* Sophistication, warm neutral bg */
+  --cream-deep: #f0e4cf;      /* Slightly darker cream */
+
+  --gray-bg: #F9F9F9;         /* Breathing room background */
+  --gray-100: #f1f1f1;
+  --gray-200: #e6e6e6;
+  --gray-300: #d4d4d4;
+  --gray-400: #a8a8a8;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #3a3a3a;
+  --gray-900: #171717;
+
+  --white: #ffffff;
+  --black: #0a0a0a;
+
+  /* --------------------------------------------------------
+     SEMANTIC COLORS
+     -------------------------------------------------------- */
+  --fg-1: #171717;            /* Primary text */
+  --fg-2: #525252;            /* Secondary text */
+  --fg-3: #a8a8a8;            /* Tertiary / meta */
+  --fg-inverse: #ffffff;      /* Text on dark */
+  --fg-accent: var(--royal-blue);
+  --fg-highlight: var(--golden);
+
+  --bg-1: #ffffff;            /* Canvas */
+  --bg-2: var(--gray-bg);     /* Section */
+  --bg-3: var(--cream);       /* Warm section */
+  --bg-4: var(--royal-blue);  /* Dark / feature */
+
+  --border-1: #eaeaea;        /* Subtle divider */
+  --border-2: #d4d4d4;        /* Stronger divider */
+  --border-focus: var(--royal-blue);
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY
+     -------------------------------------------------------- */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Futura', 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Font sizes — responsive-friendly modular scale */
+  --text-xs:   0.75rem;   /* 12 */
+  --text-sm:   0.875rem;  /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md:   1.125rem;  /* 18 */
+  --text-lg:   1.25rem;   /* 20 */
+  --text-xl:   1.5rem;    /* 24 */
+  --text-2xl:  2rem;      /* 32 */
+  --text-3xl:  2.5rem;    /* 40 */
+  --text-4xl:  3.25rem;   /* 52 */
+  --text-5xl:  4.25rem;   /* 68 */
+  --text-6xl:  5.5rem;    /* 88 */
+
+  /* Line heights */
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-snug: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-widest: 0.18em;
+
+  /* Weights */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* --------------------------------------------------------
+     SPACING (8pt base)
+     -------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  0.25rem;   /* 4  */
+  --space-2:  0.5rem;    /* 8  */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  2.5rem;    /* 40 */
+  --space-8:  3rem;      /* 48 */
+  --space-9:  4rem;      /* 64 */
+  --space-10: 5rem;      /* 80 */
+  --space-11: 6rem;      /* 96 */
+  --space-12: 8rem;      /* 128 */
+
+  /* --------------------------------------------------------
+     RADIUS
+     -------------------------------------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* --------------------------------------------------------
+     SHADOWS (subtle, warm)
+     -------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(10, 10, 20, 0.04);
+  --shadow-sm: 0 2px 6px rgba(10, 10, 20, 0.05), 0 1px 2px rgba(10, 10, 20, 0.04);
+  --shadow-md: 0 6px 18px rgba(10, 10, 20, 0.06), 0 2px 4px rgba(10, 10, 20, 0.04);
+  --shadow-lg: 0 16px 40px rgba(10, 10, 20, 0.08), 0 4px 10px rgba(10, 10, 20, 0.04);
+  --shadow-xl: 0 24px 60px rgba(10, 10, 20, 0.12);
+
+  /* Brand-tinted shadow for royal-blue cards */
+  --shadow-brand: 0 14px 36px rgba(0, 60, 166, 0.18);
+
+  /* --------------------------------------------------------
+     MOTION
+     -------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-normal: 240ms;
+  --dur-slow: 400ms;
+
+  /* --------------------------------------------------------
+     LAYOUT
+     -------------------------------------------------------- */
+  --container-max: 1200px;
+  --container-narrow: 880px;
+  --container-pad: clamp(20px, 4vw, 48px);
+}
+
+/* ============================================================
+   SEMANTIC TYPE UTILITIES
+   ============================================================ */
+.h-display {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: clamp(3rem, 6vw, var(--text-6xl));
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+}
+.h1 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: clamp(2.25rem, 4.5vw, var(--text-5xl));
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+}
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: clamp(1.75rem, 3.2vw, var(--text-4xl));
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+  color: var(--fg-1);
+}
+.h3 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+.h4 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.lead {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-2);
+  font-weight: var(--weight-regular);
+}
+.p {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-2);
+}
+.small {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--fg-2);
+}
+.meta {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+.quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  color: var(--fg-1);
+}
+
+/* Reset defaults to our system */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-serif); font-weight: var(--weight-regular); letter-spacing: var(--tracking-snug); color: var(--fg-1); }

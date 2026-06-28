@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KODOMO Japanese Class — Aylie Tanaka</title>
+<link rel="icon" href="assets/aylie-logo-blue.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="lima-font.css" />
+<link rel="stylesheet" href="fascinate-font.css" />
+<link rel="stylesheet" href="oi-font.css" />
+<link rel="stylesheet" href="moirai-font.css" />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="futura-font.css" />
+<link rel="stylesheet" href="riso.css" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #1B45D0; --navy: #0A2A66; --gold: #F4541E; --red: #E03A1C; --cream: #F1EAD9; --lgray: #E4E1DA;
+    --font-display: 'Moirai One', 'Oi', 'Lima', sans-serif;
+    --font-fat: 'Futura', 'Jost', sans-serif;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--blue); font-family: var(--font-sans); overflow-x: hidden; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+
+  /* veil */
+  #veil { position: fixed; inset: 0; background: var(--cream); z-index: 150; opacity: 0; pointer-events: none; transition: opacity .45s var(--ease); }
+  #veil.show { opacity: 1; pointer-events: auto; }
+
+  /* ===== FOLDER TABS (right-side nav) ===== */
+  .folder-tabs { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 70; display: flex; flex-direction: column; gap: 14px; }
+  .ftab { position: relative; width: 122px; height: 184px; background: #cdc3ac; clip-path: polygon(100% 0, 100% 100%, 0 76%, 0 24%); filter: drop-shadow(-4px 5px 7px rgba(70,55,30,0.28)); display: flex; align-items: center; justify-content: flex-start; padding-left: 14px; cursor: pointer; transform: translateX(70px); transition: transform .4s var(--ease), background .25s var(--ease); }
+  .ftab::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--acc, transparent); }
+  .ftab .ftab-label { writing-mode: vertical-rl; transform: rotate(180deg); font-family: 'Futura Text', var(--font-mono); font-size: 14px; font-weight: 700; letter-spacing: 0.2em; text-transform: lowercase; color: #5b5142; white-space: nowrap; }
+  .ftab:hover { transform: translateX(34px); background: #d8cfb9; }
+  .ftab.about { --acc: #1B45D0; }
+  .ftab.work { --acc: #F4541E; }
+  .ftab.contact { --acc: #E03A1C; }
+  @media (max-width: 640px) {
+    .folder-tabs { gap: 10px; }
+    .ftab { width: 96px; height: 142px; transform: translateX(58px); padding-left: 11px; }
+    .ftab:hover { transform: translateX(28px); }
+    .ftab .ftab-label { font-size: 12px; letter-spacing: 0.14em; }
+  }
+
+  /* doodles */
+  .doodle { position: absolute; color: var(--blue); pointer-events: none; z-index: 0; }
+  .doodle.gold { color: var(--gold); }
+  .doodle svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  @keyframes wiggle { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.25); opacity: 1; } }
+  @keyframes drift { 0%,100% { transform: translate(0,0) rotate(0); } 50% { transform: translate(14px,-16px) rotate(10deg); } }
+  .dwiggle { animation: wiggle 3.6s var(--ease) infinite; }
+  .dbob { animation: bob 4s ease-in-out infinite; }
+  .dspin { animation: spin 14s linear infinite; }
+  .dpulse { animation: pulse 3s ease-in-out infinite; }
+  .ddrift { animation: drift 8s ease-in-out infinite; }
+
+  /* header */
+  .site-head { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(16px, 5vw, 40px); }
+  .site-head .logo { display: flex; align-items: center; gap: 9px; font-family: var(--font-display); font-size: 19px; color: var(--blue); }
+  .site-head .logo img { width: 26px; height: 26px; object-fit: contain; }
+  .site-nav { display: flex; gap: 22px; }
+  .site-nav a { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.04em; color: var(--blue); transition: color 200ms var(--ease); }
+  .site-nav a:hover { color: var(--gold); }
+
+  /* back / next pills */
+  .navlink { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-fat); font-size: 12px; letter-spacing: 0.02em; color: var(--blue); background: var(--lgray); border: 3px solid var(--blue); border-radius: 999px; padding: 13px 24px; transition: transform .24s var(--ease), background .24s var(--ease), box-shadow .24s var(--ease); }
+  .navlink:hover { background: var(--gold); transform: translate(-2px,-2px); box-shadow: 5px 6px 0 var(--blue); }
+  .navlink .a { transition: transform .24s var(--ease); }
+  .navlink.back:hover .a { transform: translateX(-5px); }
+  .navlink.next:hover .a { transform: translateX(5px); }
+
+  /* hero */
+  .dp-hero { position: relative; padding: clamp(110px, 16vh, 170px) 0 clamp(40px, 7vh, 80px); text-align: center; }
+  .dp-back-top { position: relative; z-index: 2; display: flex; justify-content: center; margin-bottom: clamp(26px, 4vw, 44px); }
+  .dp-eyebrow { font-family: var(--font-fat); font-size: 12px; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 18px; }
+  .dp-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(3.4rem, 16vw, 12rem); line-height: 0.9; letter-spacing: 0.03em; text-transform: uppercase; color: var(--blue); }
+  .dp-sub { font-family: var(--font-sans); font-size: clamp(15px, 1.8vw, 20px); line-height: 1.6; color: var(--blue); max-width: 640px; margin: 26px auto 0; }
+  .dp-disclaimer { font-family: var(--font-sans); font-size: 12px; color: rgba(0,60,166,0.5); margin-top: 16px; font-style: italic; }
+
+  /* section rows */
+  .dp-section { padding: clamp(34px, 6vh, 70px) 0; }
+  .dp-row { display: grid; grid-template-columns: 1fr; gap: clamp(22px, 3.5vw, 44px); align-items: center; }
+  .dp-row.rev { grid-template-columns: 1fr; }
+  .dp-row.rev .dp-text { order: 0; }
+  .dp-row .dp-text { max-width: 760px; }
+  .dp-num { font-family: var(--font-fat); font-size: 13px; color: var(--gold); letter-spacing: 0.04em; margin-bottom: 16px; }
+  .dp-h { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--blue); margin-bottom: 20px; }
+  .dp-p { font-family: var(--font-sans); font-size: clamp(15px, 1.5vw, 17px); line-height: 1.8; color: var(--blue); max-width: 520px; }
+  .dp-duo { display: grid; grid-template-columns: 1fr; gap: clamp(22px, 3.5vw, 44px); margin-top: clamp(24px, 3.5vw, 44px); }
+  .dp-textfull { max-width: 760px; }
+  .dp-textfull .dp-p { max-width: 760px; }
+
+  /* image card (grid-paper) — large, no tilt */
+  .box { position: relative; background: rgba(241, 234, 217, 0.55); -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); border: 1px solid rgba(255,255,255,0.5); border-radius: clamp(18px, 2vw, 28px); padding: clamp(12px, 1.6vw, 18px); overflow: hidden; box-shadow: 0 4px 10px rgba(10,42,102,0.20); }
+  .dp-duo .box, .gallery .box { background: rgba(241, 234, 217, 0.40); -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3); box-shadow: 0 6px 10px rgba(10,42,102,0.45); }
+  .box::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(0,60,166,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,60,166,0.06) 1px, transparent 1px); background-size: 28px 28px; }
+  .box .shot { position: relative; z-index: 1; border-radius: 14px; overflow: hidden; border: 2px solid var(--blue); aspect-ratio: 16 / 9; background: var(--cream); }
+  .box .shot img { width: 100%; height: 100%; object-fit: cover; }
+  .box.t-left .shot, .box.t-right .shot { transform: none; }
+  .box .p-acc { position: absolute; z-index: 2; pointer-events: none; }
+  .box .p-acc svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  /* bottom nav */
+  .dp-foot-nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding: clamp(40px, 7vh, 90px) 0 0; border-top: 3px solid var(--blue); margin-top: clamp(40px, 6vh, 80px); }
+
+  footer { background: var(--blue); color: rgba(248,239,224,0.7); padding: 40px 0; margin-top: clamp(50px, 8vh, 100px); }
+  .foot-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-family: var(--font-sans); font-size: 13px; }
+  .foot-row .fb { font-family: var(--font-fat); color: var(--cream); font-size: 16px; }
+
+  /* reveal — alternating horizontal slide-in */
+  .reveal { opacity: 0; transform: translateX(-72px); transition: opacity 560ms var(--ease), transform 560ms var(--ease); will-change: opacity, transform; }
+  .reveal.from-right { transform: translateX(72px); }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .site-nav { display: none; }
+    .dp-row, .dp-row.rev { grid-template-columns: 1fr; gap: 30px; }
+    .dp-row.rev .dp-text { order: 0; }
+    .dp-duo { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .doodle, .box .shot { animation: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  }
+
+  /* ---- Protect project media from glass/noise: images always crisp & on top ---- */
+  .box .shot { position: relative; z-index: 2; isolation: isolate; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; filter: none !important; mix-blend-mode: normal !important; }
+  .box .shot img, .box .shot video { filter: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; mix-blend-mode: normal !important; opacity: 1 !important; }
+
+  /* ---- Kill image parallax / ghosting: media stays perfectly still ---- */
+  .ca-layer { display: none !important; }
+  .box .shot img, .box .shot video { transform: none !important; transition: none !important; will-change: auto !important; }
+
+  /* Futura header override */
+  .site-head .logo, .site-nav a { font-family: 'Futura', 'Jost', sans-serif !important; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="veil" class="show"></div>
+
+<header class="site-head">
+  <a href="index.html#top" class="logo" data-pagelink><img src="assets/aylie-logo-blue.png" alt="Aylie" />HELLO AYLIE</a>
+  <nav class="site-nav">
+    <a href="index.html#works" data-pagelink>WORKS</a>
+    <a href="index.html#about" data-pagelink>ABOUT</a>
+    <a href="index.html#contact" data-pagelink>CONTACT</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="dp-hero">
+
+  <div class="wrap">
+    <div class="dp-back-top"><a href="index.html#works" class="navlink back" data-pagelink><span class="a">←</span> BACK TO WORKS</a></div>
+    <div class="dp-eyebrow">(PROJECT) LOGO REFRESH · BRANDING</div>
+    <h1 class="dp-title" style="font-size:clamp(2.1rem,7vw,5.2rem);">KODOMO<br/>Japanese Class</h1>
+    <p class="dp-sub">A logo refresh for a Japanese class for kids.</p>
+    <p class="dp-disclaimer" style="font-style:normal;letter-spacing:0.04em;"><a href="https://kodomogakushu.com" target="_blank" style="color:var(--gold);font-weight:700;">kodomogakushu.com →</a></p>
+    <div class="box reveal" style="max-width:900px;margin:clamp(34px,6vw,64px) auto 0;">
+      <div class="shot" style="aspect-ratio:16/9;background:#fff;"><img src="assets/kodomo-wordmark.png" alt="KODOMO Japanese Class — refreshed logo" loading="lazy" style="object-fit:contain;padding:7%;" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1 — THE BRIEF -->
+<section class="dp-section">
+  <div class="wrap">
+    <div class="dp-row rev">
+      <div class="dp-text reveal">
+        <div class="dp-num">01</div>
+        <h2 class="dp-h">The brief</h2>
+        <p class="dp-p">The client asked me to refine their existing logo, with one main request: work in the look of a traditional Japanese green pencil.</p>
+      </div>
+      <div class="box reveal">
+        <div style="position:relative;z-index:1;font-family:var(--font-sub,'Futura',sans-serif);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px;">Original logo</div>
+        <div class="shot" style="aspect-ratio:16/9;background:#fff;"><img src="assets/kodomo-icon.png" alt="Original こども学習教室 logo" loading="lazy" style="object-fit:contain;padding:6%;" /></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 — THE APPROACH -->
+<section class="dp-section">
+  <div class="wrap">
+    <div class="dp-textfull reveal">
+      <div class="dp-num">02</div>
+      <h2 class="dp-h">The approach</h2>
+      <p class="dp-p">I explored child-friendly color palettes that fit their website and brand tone, and landed on a soft, welcoming green that nods to the classic pencil while feeling warm and approachable. I swapped the original font for something more playful and expressive, and integrated the pencil directly into the typography so it reads as an organic part of the logo rather than a separate element.</p>
+    </div>
+    <div class="box reveal" style="margin-top:clamp(24px,3.5vw,44px);">
+      <div class="shot" style="aspect-ratio:4/3;background:#fff;"><img src="assets/kodomo-logos.png" alt="Logo and color explorations" loading="lazy" style="object-fit:contain;padding:4%;" /></div>
+    </div>
+    <div class="box reveal">
+      <div class="shot" style="aspect-ratio:4/3;background:#fff;"><img src="assets/kodomo-colors.png" alt="Child-friendly color palette exploration" loading="lazy" style="object-fit:contain;padding:3%;" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 — FINAL -->
+<section class="dp-section">
+  <div class="wrap">
+    <div class="dp-textfull reveal">
+      <div class="dp-num">03</div>
+      <h2 class="dp-h">Final version</h2>
+      <p class="dp-p">The result is a refreshed logo that feels cohesive, colorful, and fun, while still honoring the nostalgic green-pencil reference.</p>
+    </div>
+    <div class="box reveal" style="margin-top:clamp(24px,3.5vw,44px);">
+      <div class="shot" style="aspect-ratio:16/9;background:#fff;"><img src="assets/kodomo-wordmark.png" alt="Final KODOMO Japanese Class logo" loading="lazy" style="object-fit:contain;padding:7%;" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<section>
+  <div class="wrap">
+    <div class="dp-foot-nav">
+      <a href="index.html#works" class="navlink back" data-pagelink><span class="a">←</span> BACK TO WORKS</a>
+      <a href="KAWAII SPECTRUM.html" class="navlink next" data-pagelink>NEXT PROJECT <span class="a">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="fb">HELLO AYLIE</div>
+    <div>© 2026 Aylie Tanaka · Los Angeles, CA · EN / JP</div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var veil = document.getElementById('veil');
+    requestAnimationFrame(function () { if (veil) veil.classList.remove('show'); });
+    setTimeout(function () { if (veil) veil.style.display = 'none'; }, 800);
+
+    /* reveals — alternate slide-in direction (odd: left, even: right) */
+    var els = [].slice.call(document.querySelectorAll('.reveal'));
+    var seen = new Map();
+    els.forEach(function (el, idx) {
+      el.classList.add(idx % 2 === 0 ? 'from-left' : 'from-right');
+      var k = el.parentElement, i = seen.get(k) || 0; el.style.transitionDelay = Math.min(i * 90, 300) + 'ms'; seen.set(k, i + 1);
+    });
+    if (reduced) { els.forEach(function (el) { el.classList.add('is-visible'); }); }
+    else {
+      var pending = els.slice();
+      function inView(el) { var r = el.getBoundingClientRect(); var h = window.innerHeight || document.documentElement.clientHeight; return r.top < h * 0.92 && r.bottom > 0; }
+      function check() {
+        for (var i = pending.length - 1; i >= 0; i--) { if (inView(pending[i])) { pending[i].classList.add('is-visible'); pending.splice(i, 1); } }
+        if (!pending.length) { window.removeEventListener('scroll', check); window.removeEventListener('resize', check); }
+      }
+      window.addEventListener('scroll', check, { passive: true });
+      window.addEventListener('resize', check);
+      check(); setTimeout(check, 700); setTimeout(check, 1800);
+    }
+
+    /* page transition for internal links */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[data-pagelink]') : null;
+      if (!a) return;
+      e.preventDefault();
+      var href = a.getAttribute('href');
+      if (veil) { veil.style.display = ''; void veil.offsetWidth; veil.classList.add('show'); }
+      setTimeout(function () { location.href = href; }, 430);
+    });
+  })();
+</script>
+</body>
+</html>
