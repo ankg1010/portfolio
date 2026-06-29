@@ -325,6 +325,11 @@
     .works-grid { grid-template-columns: 1fr; }
     .field-row { grid-template-columns: 1fr; }
     .skill-grid { grid-template-columns: repeat(3, 1fr); }
+    /* Works coverflow on phones: one centered card, neighbors peeking */
+    .cf-slider { overflow: hidden; max-width: 100%; }
+    .cf-stage { height: clamp(380px, 96vw, 460px); }
+    .cf-slider .work-card { width: 70vw; }
+    .cf-dots { max-width: 100%; padding: 0 12px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -989,6 +994,7 @@
   var rt;
   window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
   layout();
+  window.__worksCf = { layout: layout, reset: function(){ center = 0; layout(); } };
 })();
 </script>
 
@@ -1030,8 +1036,13 @@
   var intro = document.getElementById('intro');
   if (!intro) return;
   var KEY = 'aylie_intro_seen';
-  // Skip entirely if already shown this session
-  try { if (sessionStorage.getItem(KEY) === '1') { intro.remove(); return; } } catch(e){}
+  // Skip entirely if already shown this session (also covers Back / bfcache restores)
+  function alreadySeen(){ try { return sessionStorage.getItem(KEY) === '1'; } catch(e){ return false; } }
+  function killIntro(){
+    var el = document.getElementById('intro');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+  if (alreadySeen()) { killIntro(); return; }
 
   var logo = document.getElementById('ivLogo');
   var tilt = document.getElementById('ivTilt');
@@ -1082,6 +1093,24 @@
   }
   requestAnimationFrame(tick);
 })();
+
+// bfcache / Back-button safety: ensure a clean homepage when restored from cache
+window.addEventListener('pageshow', function(e){
+  var seen = false; try { seen = sessionStorage.getItem('aylie_intro_seen') === '1'; } catch(_){}
+  // If the intro was already seen (e.g. returning via Back), make sure no overlay is left stuck
+  if (seen){
+    var el = document.getElementById('intro');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+  if (e.persisted){
+    // Page restored from bfcache: clear any half-faded page-transition veil
+    var veil = document.getElementById('veil');
+    if (veil){ veil.classList.remove('show'); veil.style.display = 'none'; }
+    document.body.classList.add('entered');
+    // Re-layout the Works slider to a valid centered state
+    if (window.__worksCf && typeof window.__worksCf.reset === 'function') window.__worksCf.reset();
+  }
+});
 </script>
 
 <template id="__bundler_thumbnail" data-bg-color="#F1EAD9">
