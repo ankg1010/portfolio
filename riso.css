@@ -85,7 +85,7 @@ html.canvas-grain::after { display: none; }
 .halftone { color: var(--blue) !important; }
 
 /* hero corner halftone burst */
-.hero::after, .dp-hero::after {
+.dp-hero::after {
   content: "";
   position: absolute;
   right: -60px; top: 8%;
