@@ -327,8 +327,8 @@
     .skill-grid { grid-template-columns: repeat(3, 1fr); }
     /* Works coverflow on phones: one centered card, neighbors peeking */
     .cf-slider { overflow: hidden; max-width: 100%; }
-    .cf-stage { height: clamp(380px, 96vw, 460px); }
-    .cf-slider .work-card { width: 70vw; }
+    .cf-stage { height: auto; min-height: 320px; }
+    .cf-slider .work-card { width: 80vw; }
     .cf-dots { max-width: 100%; padding: 0 12px; }
   }
 
@@ -930,6 +930,9 @@
   var dotWrap = document.getElementById('worksCfDots');
   var n = cards.length, center = 0;
 
+  // slider cards must not keep the scroll-reveal hidden/offset state (it fights the coverflow transform)
+  cards.forEach(function(c){ c.classList.remove('reveal'); c.classList.remove('is-visible'); });
+
   // build dots
   cards.forEach(function(_, i){
     var b = document.createElement('button');
@@ -942,6 +945,7 @@
 
   function layout(){
     var cw = cards[0].offsetWidth || 280;
+    var centerH = 0;
     cards.forEach(function(card, i){
       var d = (i - center + n) % n;
       if (d > n / 2) d -= n;
@@ -955,7 +959,10 @@
       card.style.opacity = op;
       card.style.zIndex = 100 - ad;
       card.style.pointerEvents = ad > 2 ? 'none' : 'auto';
+      if (d === 0) centerH = card.offsetHeight;
     });
+    // size the stage to the centered card so there's no huge empty gap
+    if (centerH) stage.style.height = centerH + 'px';
     dots.forEach(function(dt, i){ dt.classList.toggle('is-active', i === center); });
   }
   function go(i){ center = (i % n + n) % n; layout(); }
@@ -994,6 +1001,8 @@
   var rt;
   window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(layout, 120); });
   layout();
+  requestAnimationFrame(layout);
+  window.addEventListener('load', layout);
   window.__worksCf = { layout: layout, reset: function(){ center = 0; layout(); } };
 })();
 </script>
